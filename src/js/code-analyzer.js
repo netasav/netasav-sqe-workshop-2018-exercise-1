@@ -67,7 +67,7 @@ const parseCode = (codeToParse) => {
     //console.log(parsed_nodes)
     parsedCode=parsed_nodes;
     parsed_nodes=[];
-    return parsedCode;
+    return parsedCode
 };
 //return value for expression
 function expresrionPars(node) {
