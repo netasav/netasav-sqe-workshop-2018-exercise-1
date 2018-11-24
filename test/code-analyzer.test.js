@@ -1,20 +1,21 @@
 import assert from 'assert';
 import {parseCode} from '../src/js/code-analyzer';
 
-describe('The javascript parser', () => {
+describe('The javascript parser',() => {
     it('is parsing an empty function correctly', () => {
         assert.equal(
             JSON.stringify(parseCode('')),
             '[]'
         );
     });
-
     it('is parsing a simple variable declaration correctly', () => {
         assert.equal(
             JSON.stringify(parseCode('let a = 1;')),
             '[{"Line":1,"Type":"variable declaration","Name":"a","Condition":"","Value":1}]'
         );
     });
+});
+describe('The javascript parser',() => {
     it('is parsing a function declaration with variables and return correctly', () => {
         assert.equal(
             JSON.stringify(parseCode('function binarySearch(X){return 1}')),
@@ -27,12 +28,22 @@ describe('The javascript parser', () => {
             '[{"Line":1,"Type":"Update Expression","Name":"i","Condition":"","Value":"++"}]'
         );
     });
+});
+describe('The javascript parser',() => {
+    it('is parsing return update expression correctly', () => {
+        assert.equal(
+            JSON.stringify(parseCode('++i')),
+            '[{"Line":1,"Type":"Update Expression","Name":"i","Condition":"","Value":"++"}]'
+        );
+    });
     it('is parsing a empty init variable declaration  correctly', () => {
         assert.equal(
             JSON.stringify(parseCode('let a;')),
             '[{"Line":1,"Type":"variable declaration","Name":"a","Condition":"","Value":null}]'
         );
     });
+});
+describe('The javascript parser',() => {
     it('is parsing a memberExpression essignment + literal correctly', () => {
         assert.equal(
             JSON.stringify(parseCode('arr[o]=1')),
@@ -45,6 +56,8 @@ describe('The javascript parser', () => {
             '[{"Line":1,"Type":"Assignment Expression","Name":"x","Condition":"","Value":"arr[o]"}]'
         );
     });
+});
+describe('The javascript parser',() => {
     it('is parsing a memberExpression assignment + identifyer  correctly', () => {
         assert.equal(
             JSON.stringify(parseCode('arr[o]=x')),
@@ -57,6 +70,8 @@ describe('The javascript parser', () => {
             '[{"Line":1,"Type":"Assignment Expression","Name":"x","Condition":"","Value":"arr[i]+1/2"}]'
         );
     });
+});
+describe('The javascript parser',() => {
     it('is parsing a assignmet complex2 binary expression left correctly', () => {
         assert.equal(
             JSON.stringify(parseCode('x=(y+z)/((f+1)/(f-1))')),
@@ -69,6 +84,8 @@ describe('The javascript parser', () => {
             '[{"Line":1,"Type":"Assignment Expression","Name":"x","Condition":"","Value":"arr[i]+1"}]'
         );
     });
+});
+describe('The javascript parser',() => {
     it('is parsing a  essignment + binary expression  correctly', () => {
         assert.equal(
             JSON.stringify(parseCode('let x=y+1;')),
@@ -81,6 +98,8 @@ describe('The javascript parser', () => {
             '[{"Line":1,"Type":"Update Expression","Name":"x","Condition":"","Value":"++"},{"Line":1,"Type":"while statement","Name":"","Condition":"i>1","Value":""}]'
         );
     });
+});
+describe('The javascript parser',() => {
     it('is parsing a  if statment  correctly', () => {
         assert.equal(
             JSON.stringify(parseCode('if(i>1){x++}')),
@@ -100,10 +119,3 @@ describe('The javascript parser', () => {
         );
     });
 });
-    // it('is variable declaration return correctly', () => {
-    //     assert.equal(
-    //         JSON.stringify(parseCode('var x;')),
-    //         '[{"Line":1,"Type":"variable declaration","Name":"x","Condition":"","Value":null}]'
-    //     );
-    // });
-//});
