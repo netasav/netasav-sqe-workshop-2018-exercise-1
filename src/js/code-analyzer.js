@@ -60,10 +60,10 @@ function  continueFunc2(node,metadata){
 //return value for expression
 function expresrionPars(node) {
     if(node.right==null && node.left==null) {
-        if(node.type=='MemberExpression')
-            return memberExpressionValue(node);
-        else
-            return expresionValue(node);
+        // if(node.type=='MemberExpression')
+        //     return memberExpressionValue(node);
+        // else
+        return expresionValue(node);
     }
     else if(node.right!=null && node.left!=null) {
         return expresrionPars(node.left)+ node.operator + expresrionPars(node.right);
@@ -75,29 +75,30 @@ function expresrionPars(node) {
 function expresionValue(node)
 {
     let value;
-    if(node.type=='Literal')
-    {
+    if(node.type=='Literal') {
         value= node.value;
     }
-    else if(node.type=='Identifier')
-    {
+    else if(node.type=='Identifier') {
         value= node.name;
     }
-    else if(node.type=='UnaryExpression')
-    {
+    else if(node.type=='UnaryExpression') {
         value=node.operator + node.argument.value;
+    }
+    else if(node.type=='MemberExpression')
+    {
+        value= node.object.name+'['+expresrionPars(node.property)+']';
     }
     return value;
 }
 
-function memberExpressionValue(node)
-{
-    let obj=node.object.name;
-    let propNode=node.property; //expressionValue(node.property)
-    let prop= expresrionPars(propNode);
-
-    return obj+'['+prop+']';
-}
+// function memberExpressionValue(node)
+// {
+//     let obj=node.object.name;
+//     let propNode=node.property; //expressionValue(node.property)
+//     let prop= expresrionPars(propNode);
+//
+//     return obj+'['+prop+']';
+// }
 //put node inside nodes array;
 function pushNode(line,type,name,condition,value)
 {
@@ -112,22 +113,14 @@ function pushNode(line,type,name,condition,value)
 
 }
 function assignmentExpressionNameVal(node){
-
-    if(node.type=='MemberExpression')
-    {
-        return memberExpressionValue(node);
-    }
-    else
-    {
-        return expresionValue(node);
-    }
+    return expresionValue(node);
 }
 function assignmentExpressionValue(node){
     if(node.type=='BinaryExpression') {
         return  expresrionPars(node);
     }
     else if(node.type=='MemberExpression') {
-        return memberExpressionValue(node);
+        return expresrionPars(node);
     }
     else {
         return expresionValue(node);
